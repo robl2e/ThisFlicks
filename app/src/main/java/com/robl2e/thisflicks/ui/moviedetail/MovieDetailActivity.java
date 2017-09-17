@@ -26,6 +26,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     private TextView descriptionTextView;
     private ImageView posterImageView;
     private RatingBar ratingBarView;
+    private TextView popularityTextView;
 
     private MovieItemViewModel movieItemViewModel;
 
@@ -57,6 +58,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         descriptionTextView = (TextView) findViewById(R.id.text_description);
         posterImageView = (ImageView) findViewById(R.id.image_poster);
         ratingBarView = (RatingBar) findViewById(R.id.rating_bar);
+        popularityTextView = (TextView) findViewById(R.id.text_popularity);
     }
 
     private void setupToolbar() {
@@ -87,6 +89,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         displayToolbarView(viewModel);
         displayPosterView(viewModel);
         displayRatingView(viewModel);
+        displayPopularityView(viewModel);
     }
 
     private void displayToolbarView(MovieItemViewModel viewModel) {
@@ -114,5 +117,14 @@ public class MovieDetailActivity extends AppCompatActivity {
         BigDecimal bigDecimal = new BigDecimal(rating/2);
         float normalizedRating = bigDecimal.floatValue();
         ratingBarView.setRating(normalizedRating);
+    }
+
+    private void displayPopularityView(MovieItemViewModel viewModel) {
+        String popularityString = getResources().getString(R.string.popularity, "0");
+        Double popularity = viewModel.getPopularity();
+        if (popularity != null) {
+            popularityString = getResources().getString(R.string.popularity, String.valueOf(popularity));
+        }
+        popularityTextView.setText(popularityString);
     }
 }
