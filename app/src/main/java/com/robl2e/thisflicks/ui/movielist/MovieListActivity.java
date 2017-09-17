@@ -24,7 +24,7 @@ import cz.msebera.android.httpclient.Header;
 public class MovieListActivity extends AppCompatActivity {
     private static final String TAG = MovieListActivity.class.getSimpleName();
     private RecyclerView movieListView;
-
+    private RecyclerView.LayoutManager layoutManager;
     private MovieListAdapter listAdapter;
 
     @Override
@@ -76,10 +76,24 @@ public class MovieListActivity extends AppCompatActivity {
         listAdapter = new MovieListAdapter(this, new ArrayList<MovieItemViewModel>());
 
         if (isLandscapeOrientation()) {
-            movieListView.setLayoutManager(new LinearLayoutManager(this));
+            layoutManager = new LinearLayoutManager(this);
         } else {
-            movieListView.setLayoutManager(new GridLayoutManager(this, 2));
+            layoutManager = new GridLayoutManager(this, 2);
+            GridLayoutManager gridLayoutManager = (GridLayoutManager) layoutManager;
+            gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    MovieItemViewModel viewModel = listAdapter.getItem(position);
+                    if (viewModel == null) return 1;
+
+                    if (viewModel.isHighlyRated()) {
+                        return 2;
+                    }
+                    return 1;
+                }
+            });
         }
+        movieListView.setLayoutManager(layoutManager);
         movieListView.setAdapter(listAdapter);
     }
 
