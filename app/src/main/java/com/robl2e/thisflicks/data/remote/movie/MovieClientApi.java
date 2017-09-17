@@ -1,8 +1,15 @@
 package com.robl2e.thisflicks.data.remote.movie;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.RequestParams;
-import com.robl2e.thisflicks.data.remote.AppResponseHandlerInterface;
+import com.robl2e.thisflicks.data.remote.common.AppResponseHandlerInterface;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by robl2e on 9/15/17.
@@ -32,16 +39,36 @@ public class MovieClientApi {
         return Holder.movieClientApi;
     }
 
-    private AsyncHttpClient client;
+    private OkHttpClient client;
 
     MovieClientApi() {
-        client = new AsyncHttpClient();
+        client = new OkHttpClient();
     }
 
-    public void getNowPlaying(AppResponseHandlerInterface responseHandler) {
-        RequestParams params = new RequestParams();
-        params.put(PARAM_API_KEY, API_KEY);
-        client.get(NOW_PLAYING_ENDPOINT, params, responseHandler);
+    public void getNowPlaying(final AppResponseHandlerInterface responseHandler) {
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(NOW_PLAYING_ENDPOINT).newBuilder();
+        urlBuilder.addQueryParameter(PARAM_API_KEY, API_KEY);
+        String url = urlBuilder.build().toString();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                if (responseHandler == null) return;
+
+                responseHandler.onFailure(call, e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (responseHandler == null) return;
+
+                responseHandler.onResponse(call, response);
+            }
+        });
     }
 
     public String buildImageUrl(String filepath) {

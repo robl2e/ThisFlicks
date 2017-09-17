@@ -9,7 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import com.robl2e.thisflicks.R;
 import com.robl2e.thisflicks.data.model.movie.Movie;
-import com.robl2e.thisflicks.data.remote.AppAsyncHttpResponseHandler;
+import com.robl2e.thisflicks.data.remote.common.AppAsyncHttpResponseHandler;
 import com.robl2e.thisflicks.data.remote.movie.MovieClientApi;
 import com.robl2e.thisflicks.data.remote.movie.MovieNowPlayingResponse;
 import com.robl2e.thisflicks.ui.common.ItemClickSupport;
@@ -17,10 +17,12 @@ import com.robl2e.thisflicks.ui.moviedetail.MovieDetailActivity;
 import com.robl2e.thisflicks.ui.util.UIResourceUtils;
 import com.robl2e.thisflicks.util.JsonUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cz.msebera.android.httpclient.Header;
+import okhttp3.Call;
+import okhttp3.Response;
 
 public class MovieListActivity extends AppCompatActivity {
     private static final String TAG = MovieListActivity.class.getSimpleName();
@@ -45,24 +47,29 @@ public class MovieListActivity extends AppCompatActivity {
     private void loadNowPlayingMovies() {
         MovieClientApi.getInstance().getNowPlaying(new AppAsyncHttpResponseHandler() {
             @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+            public void onFailure(Call call, IOException e) {
 
             }
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                MovieNowPlayingResponse response = JsonUtils.fromJson(responseString, MovieNowPlayingResponse.class);
-                List<Movie> nowPlayingMovies = response.getResults();
+            public void onResponse(Call call, Response response) throws IOException {
+                String responseString = response.body().string();
+                final MovieNowPlayingResponse nowPlayingResponse = JsonUtils.fromJson(responseString, MovieNowPlayingResponse.class);
 
-                List<MovieItemViewModel> viewModels = new ArrayList<>();
-                for (Movie movie : nowPlayingMovies) {
-                    MovieItemViewModel viewModel = MovieItemViewModel.convert(movie);
-                    viewModel.setOrientation(UIResourceUtils.getScreenOrientation(MovieListActivity.this));
-                    viewModels.add(viewModel);
-                }
-
-                listAdapter.setItems(viewModels);
-                updateListAdapter();
+                MovieListActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        List<Movie> nowPlayingMovies = nowPlayingResponse.getResults();
+                        List<MovieItemViewModel> viewModels = new ArrayList<>();
+                        for (Movie movie : nowPlayingMovies) {
+                            MovieItemViewModel viewModel = MovieItemViewModel.convert(movie);
+                            viewModel.setOrientation(UIResourceUtils.getScreenOrientation(MovieListActivity.this));
+                            viewModels.add(viewModel);
+                        }
+                        listAdapter.setItems(viewModels);
+                        updateListAdapter();
+                    }
+                });
             }
         });
     }
