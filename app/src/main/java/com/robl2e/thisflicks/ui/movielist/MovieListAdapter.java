@@ -114,6 +114,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
             }
             Picasso.with(posterImageView.getContext())
                     .load(imageUrl)
+                    .placeholder(R.drawable.ic_filmstrip)
+                    .error(R.drawable.ic_filmstrip)
                     .fit()
                     .centerCrop()
                     .into(posterImageView);
