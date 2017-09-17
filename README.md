@@ -39,9 +39,12 @@ The following **additional** features are implemented:
 Here's a walkthrough of implemented user stories:
 
 Portrait:
+
 <img src='https://i.imgur.com/UG9BdbD.gif' title='Video Walkthrough' width='600' alt='Video Walkthrough' />
 
+
 Landscape:
+
 <img src='https://i.imgur.com/HtOfoZq.gif' title='Video Walkthrough' width='600' alt='Video Walkthrough' />
 
 GIF created with [AZ Screen Recorder](https://play.google.com/store/apps/details?id=com.hecorat.screenrecorder.free).
@@ -61,7 +64,7 @@ One difficulty was determining the available sizes for MovieDB's images. It was 
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright 2017 Robert Lee
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
