@@ -1,6 +1,7 @@
 package com.robl2e.thisflicks.ui.movielist;
 
 import com.robl2e.thisflicks.data.model.movie.Movie;
+import com.robl2e.thisflicks.data.remote.movie.MovieClientApi;
 
 /**
  * Created by robl2e on 9/15/17.
@@ -10,14 +11,14 @@ public class MovieItemViewModel {
     private final Integer id;
     private final String name;
     private final String description;
-    private final String posterImageUrl;
+    private final String posterImagePath;
     private final String backdropImageUrl;
 
-    public MovieItemViewModel(Integer id, String name, String description, String posterImageUrl, String backdropImageUrl) {
+    public MovieItemViewModel(Integer id, String name, String description, String posterImagePath, String backdropImageUrl) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.posterImageUrl = posterImageUrl;
+        this.posterImagePath = posterImagePath;
         this.backdropImageUrl = backdropImageUrl;
     }
 
@@ -33,8 +34,12 @@ public class MovieItemViewModel {
         return description;
     }
 
-    public String getPosterImageUrl() {
-        return posterImageUrl;
+    public String getPosterImagePath() {
+        return posterImagePath;
+    }
+
+    public String getImagePosterUrl() {
+        return MovieClientApi.getInstance().buildImagePosterUrl(posterImagePath);
     }
 
     public String getBackdropImageUrl() {

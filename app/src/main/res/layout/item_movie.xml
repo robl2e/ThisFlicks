@@ -12,7 +12,7 @@
 
     <LinearLayout
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimaryDark"
+        android:background="#80434343"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -32,6 +32,8 @@
             android:paddingLeft="@dimen/text_body_padding"
             android:paddingRight="@dimen/text_body_padding"
             android:paddingBottom="@dimen/text_body_padding"
+            android:maxLines="3"
+            android:ellipsize="end"
             tools:text="Eighties teenager Marty McFly is accidentally sent back in time to 1955, inadvertently disrupting his parents' first meeting and attracting his mother's romantic interest. Marty must repair the damage to history by rekindling his parents' romance and - with the help of his eccentric inventor friend Doc Brown - return to 1985."
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

@@ -15,6 +15,11 @@ public class MovieClientApi {
     private final String PARAM_API_KEY = "api_key";
     private final String API_KEY = "a07e22bc18f5cb106bfe4cc1f83ad8ed";
 
+
+    private final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p";
+    private final String IMAGE_PARAM_SIZE = "/w342";
+    private final String IMAGE_ENDPOINT = IMAGE_BASE_URL + IMAGE_PARAM_SIZE;
+
     private static class Holder {
         static final MovieClientApi movieClientApi = new MovieClientApi();
     }
@@ -37,5 +42,9 @@ public class MovieClientApi {
         RequestParams params = new RequestParams();
         params.put(PARAM_API_KEY, API_KEY);
         client.get(NOW_PLAYING_ENDPOINT, params, responseHandler);
+    }
+
+    public String buildImagePosterUrl(String filepath) {
+        return IMAGE_ENDPOINT + filepath;
     }
 }
