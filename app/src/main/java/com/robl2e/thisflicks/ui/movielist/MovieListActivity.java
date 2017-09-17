@@ -2,7 +2,6 @@ package com.robl2e.thisflicks.ui.movielist;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -13,6 +12,7 @@ import com.robl2e.thisflicks.data.model.movie.Movie;
 import com.robl2e.thisflicks.data.remote.AppAsyncHttpResponseHandler;
 import com.robl2e.thisflicks.data.remote.movie.MovieClientApi;
 import com.robl2e.thisflicks.data.remote.movie.MovieNowPlayingResponse;
+import com.robl2e.thisflicks.ui.utils.UIResourceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +56,7 @@ public class MovieListActivity extends AppCompatActivity {
                 List<MovieItemViewModel> viewModels = new ArrayList<>();
                 for (Movie movie : nowPlayingMovies) {
                     MovieItemViewModel viewModel = MovieItemViewModel.convert(movie);
+                    viewModel.setOrientation(UIResourceUtils.getScreenOrientation(MovieListActivity.this));
                     viewModels.add(viewModel);
                 }
 
@@ -73,9 +74,6 @@ public class MovieListActivity extends AppCompatActivity {
         listAdapter = new MovieListAdapter(this, new ArrayList<MovieItemViewModel>());
         movieListView.setLayoutManager(new LinearLayoutManager(this));
         movieListView.setAdapter(listAdapter);
-        RecyclerView.ItemDecoration itemDecoration = new
-                DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        movieListView.addItemDecoration(itemDecoration);
     }
 
     private void updateListAdapter() {

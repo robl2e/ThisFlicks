@@ -1,5 +1,8 @@
 package com.robl2e.thisflicks.ui.movielist;
 
+
+import android.content.res.Configuration;
+
 import com.robl2e.thisflicks.data.model.movie.Movie;
 import com.robl2e.thisflicks.data.remote.movie.MovieClientApi;
 
@@ -12,14 +15,15 @@ public class MovieItemViewModel {
     private final String name;
     private final String description;
     private final String posterImagePath;
-    private final String backdropImageUrl;
+    private final String backdropImagePath;
+    private int orientation = Configuration.ORIENTATION_PORTRAIT;
 
-    public MovieItemViewModel(Integer id, String name, String description, String posterImagePath, String backdropImageUrl) {
+    public MovieItemViewModel(Integer id, String name, String description, String posterImagePath, String backdropImagePath) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.posterImagePath = posterImagePath;
-        this.backdropImageUrl = backdropImageUrl;
+        this.backdropImagePath = backdropImagePath;
     }
 
     public Integer getId() {
@@ -39,11 +43,23 @@ public class MovieItemViewModel {
     }
 
     public String getImagePosterUrl() {
-        return MovieClientApi.getInstance().buildImagePosterUrl(posterImagePath);
+        return MovieClientApi.getInstance().buildImageUrl(posterImagePath);
     }
 
-    public String getBackdropImageUrl() {
-        return backdropImageUrl;
+    public String getBackdropImagePath() {
+        return backdropImagePath;
+    }
+
+    public String getImageBackdropUrl() {
+        return MovieClientApi.getInstance().buildImageUrl(backdropImagePath);
+    }
+
+    public void setOrientation(int orientation) {
+        this.orientation = orientation;
+    }
+
+    public int getOrientation() {
+        return orientation;
     }
 
     public static MovieItemViewModel convert(Movie from) {

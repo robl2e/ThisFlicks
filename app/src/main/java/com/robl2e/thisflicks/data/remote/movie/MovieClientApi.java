@@ -44,7 +44,7 @@ public class MovieClientApi {
         client.get(NOW_PLAYING_ENDPOINT, params, responseHandler);
     }
 
-    public String buildImagePosterUrl(String filepath) {
+    public String buildImageUrl(String filepath) {
         return IMAGE_ENDPOINT + filepath;
     }
 }
