@@ -1,7 +1,9 @@
 package com.robl2e.thisflicks.ui.movielist;
 
+import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -72,8 +74,18 @@ public class MovieListActivity extends AppCompatActivity {
 
     private void initializeList() {
         listAdapter = new MovieListAdapter(this, new ArrayList<MovieItemViewModel>());
-        movieListView.setLayoutManager(new LinearLayoutManager(this));
+
+        if (isLandscapeOrientation()) {
+            movieListView.setLayoutManager(new LinearLayoutManager(this));
+        } else {
+            movieListView.setLayoutManager(new GridLayoutManager(this, 2));
+        }
         movieListView.setAdapter(listAdapter);
+    }
+
+    private boolean isLandscapeOrientation() {
+        return UIResourceUtils.getScreenOrientation(this)
+                == Configuration.ORIENTATION_LANDSCAPE;
     }
 
     private void updateListAdapter() {
