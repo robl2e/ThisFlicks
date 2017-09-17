@@ -38,13 +38,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-Portrait:
-
-<img src='https://i.imgur.com/crFB0DB.gif' title='Video Walkthrough' width='600' alt='Video Walkthrough' />
-
-Landscape:
-
-<img src='https://i.imgur.com/HtOfoZq.gif' title='Video Walkthrough' width='600' alt='Video Walkthrough' />
+<img src='https://i.imgur.com/6lljjBC.gif' title='Video Walkthrough' width='600' alt='Video Walkthrough' />
 
 GIF created with [AZ Screen Recorder](https://play.google.com/store/apps/details?id=com.hecorat.screenrecorder.free).
 
