@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.robl2e.thisflicks.R;
-import com.robl2e.thisflicks.ui.utils.UIResourceUtils;
+import com.robl2e.thisflicks.ui.util.UIResourceUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.robl2e.thisflicks.ui.utils;
+package com.robl2e.thisflicks.ui.util;
 
 import android.content.Context;
 

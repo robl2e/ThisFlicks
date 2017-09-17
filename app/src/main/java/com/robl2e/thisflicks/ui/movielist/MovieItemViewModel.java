@@ -17,15 +17,17 @@ public class MovieItemViewModel {
     private final String posterImagePath;
     private final String backdropImagePath;
     private final Double voteAverage;
+    private final Double popularity;
     private int orientation = Configuration.ORIENTATION_PORTRAIT;
 
-    public MovieItemViewModel(Integer id, String name, String description, String posterImagePath, String backdropImagePath, Double voteAverage) {
+    public MovieItemViewModel(Integer id, String name, String description, String posterImagePath, String backdropImagePath, Double voteAverage, Double popularity) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.posterImagePath = posterImagePath;
         this.backdropImagePath = backdropImagePath;
         this.voteAverage = voteAverage;
+        this.popularity = popularity;
     }
 
     public Integer getId() {
@@ -56,6 +58,14 @@ public class MovieItemViewModel {
         return MovieClientApi.getInstance().buildImageUrl(backdropImagePath);
     }
 
+    public Double getVoteAverage() {
+        return voteAverage;
+    }
+
+    public Double getPopularity() {
+        return popularity;
+    }
+
     public void setOrientation(int orientation) {
         this.orientation = orientation;
     }
@@ -71,6 +81,6 @@ public class MovieItemViewModel {
     public static MovieItemViewModel convert(Movie from) {
         return new MovieItemViewModel(from.getId()
                 , from.getTitle(), from.getOverview()
-                , from.getPosterPath(), from.getBackdropPath(), from.getVoteAverage());
+                , from.getPosterPath(), from.getBackdropPath(), from.getVoteAverage(), from.getPopularity());
     }
 }

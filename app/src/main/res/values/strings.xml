@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ThisFlicks</string>
+    <string name="title_activity_movie_detail">MovieDetailActivity</string>
+    <string name="now_playing">Now Playing</string>
 </resources>

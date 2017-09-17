@@ -16,7 +16,7 @@
     <LinearLayout
         android:layout_toEndOf="@id/image_poster"
         android:layout_toRightOf="@id/image_poster"
-        android:background="@color/black"
+        android:background="@color/darkBackground"
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">

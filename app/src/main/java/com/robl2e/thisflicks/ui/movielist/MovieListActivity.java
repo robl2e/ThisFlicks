@@ -6,15 +6,16 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import android.view.View;
 import com.robl2e.thisflicks.R;
 import com.robl2e.thisflicks.data.model.movie.Movie;
 import com.robl2e.thisflicks.data.remote.AppAsyncHttpResponseHandler;
 import com.robl2e.thisflicks.data.remote.movie.MovieClientApi;
 import com.robl2e.thisflicks.data.remote.movie.MovieNowPlayingResponse;
-import com.robl2e.thisflicks.ui.utils.UIResourceUtils;
+import com.robl2e.thisflicks.ui.common.ItemClickSupport;
+import com.robl2e.thisflicks.ui.moviedetail.MovieDetailActivity;
+import com.robl2e.thisflicks.ui.util.UIResourceUtils;
+import com.robl2e.thisflicks.util.JsonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,9 +51,7 @@ public class MovieListActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                Gson gson = new GsonBuilder().create();
-                // Define Response class to correspond to the JSON response returned
-                MovieNowPlayingResponse response = gson.fromJson(responseString, MovieNowPlayingResponse.class);
+                MovieNowPlayingResponse response = JsonUtils.fromJson(responseString, MovieNowPlayingResponse.class);
                 List<Movie> nowPlayingMovies = response.getResults();
 
                 List<MovieItemViewModel> viewModels = new ArrayList<>();
@@ -95,6 +94,16 @@ public class MovieListActivity extends AppCompatActivity {
         }
         movieListView.setLayoutManager(layoutManager);
         movieListView.setAdapter(listAdapter);
+        ItemClickSupport itemClickSupport = ItemClickSupport.addTo(movieListView);
+        itemClickSupport.setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                MovieItemViewModel viewModel = listAdapter.getItem(position);
+                if (viewModel == null) return;
+
+                MovieDetailActivity.start(MovieListActivity.this, viewModel);
+            }
+        });
     }
 
     private boolean isLandscapeOrientation() {
